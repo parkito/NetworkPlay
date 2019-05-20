@@ -2,7 +2,18 @@ package ru.siksmfp.player;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+
+        Player initiator = new Player();
+        Player consumer = new Player();
+
+        MessageBus bus = MessageBus.builder()
+                .initiator(initiator)
+                .consumer(consumer)
+                .build();
+        for (int i = 0; i < 100; i++) {
+            initiator.sent("Message " + i);
+        }
+
     }
 }
 
