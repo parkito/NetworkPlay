@@ -9,6 +9,10 @@ public class MessageBus {
         return new MessageBus().new Builder();
     }
 
+    public void send(String message) {
+
+    }
+
     public class Builder {
         public Builder initiator(Player initiator) {
             MessageBus.this.initiator = initiator;

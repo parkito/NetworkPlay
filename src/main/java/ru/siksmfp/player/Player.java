@@ -1,27 +1,25 @@
 package ru.siksmfp.player;
 
-public class Player {
-    private int messageSendCounter;
-    private int messageReceivedCounter;
+import java.util.Map;
 
+public class Player {
+    private Map<String, MessageCounter> messageCounterMap;
+
+    private String Id;
     private MessageBus messageBus;
 
-    public Player(MessageBus messageBus) {
-        this.messageBus = messageBus;
+    public void sent(String text) {
+        Message message = new Message();
+//        messageBus.send(message);
+//        messageSendCounter++;
     }
 
-    public Player() {
-
+    public void consume(Message message) {
+        System.out.println("Received: " + message);
+        messageCounterMap.computeIfAbsent(message.getPlayerFrom(), k -> new MessageCounter())
+                .incrementReceivedCounter();
     }
 
-    public void sent(String aaa) {
-        messageBus.send();
-    }
-
-    public void consume() {
-        String message = bus.consume();
-        if (message != null) {
-
-        }
+    public void registerBus(MessageBus bus) {
     }
 }
