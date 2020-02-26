@@ -13,15 +13,15 @@ import java.util.concurrent.ExecutorService;
 import static java.nio.channels.SelectionKey.OP_WRITE;
 import static ru.siksmfp.network.play.champ.utils.TransmogrifyUtils.transmogrify;
 
-public class PooleadReadHandler implements Handler<SelectionKey> {
+public class PooledReadHandler implements Handler<SelectionKey> {
 
     private Map<SocketChannel, Queue<ByteBuffer>> pendingData;
     private ExecutorService executorService;
     private Queue<Runnable> selectorAction;
 
-    public PooleadReadHandler(Map<SocketChannel, Queue<ByteBuffer>> pendingData,
-                              ExecutorService executorService,
-                              Queue<Runnable> selectorActions) {
+    public PooledReadHandler(Map<SocketChannel, Queue<ByteBuffer>> pendingData,
+                             ExecutorService executorService,
+                             Queue<Runnable> selectorActions) {
         this.pendingData = pendingData;
         this.executorService = executorService;
         this.selectorAction = selectorActions;

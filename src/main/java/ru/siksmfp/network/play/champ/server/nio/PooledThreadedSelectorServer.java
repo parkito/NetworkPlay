@@ -1,10 +1,5 @@
 package ru.siksmfp.network.play.champ.server.nio;
 
-import ru.siksmfp.network.play.champ.handler.api.Handler;
-import ru.siksmfp.network.play.champ.handler.impl.nio.PooleadReadHandler;
-import ru.siksmfp.network.play.champ.handler.impl.nio.AcceptHandler;
-import ru.siksmfp.network.play.champ.handler.impl.nio.WriteHandler;
-
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -20,6 +15,10 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import ru.siksmfp.network.play.champ.handler.api.Handler;
+import ru.siksmfp.network.play.champ.handler.impl.nio.AcceptHandler;
+import ru.siksmfp.network.play.champ.handler.impl.nio.PooledReadHandler;
+import ru.siksmfp.network.play.champ.handler.impl.nio.WriteHandler;
 
 import static java.nio.channels.SelectionKey.OP_ACCEPT;
 
@@ -31,7 +30,7 @@ public class PooledThreadedSelectorServer {
         Queue<Runnable> selectorAction = new ConcurrentLinkedDeque<>();
 
         Handler<SelectionKey> acceptHandler = new AcceptHandler(pendingData);
-        Handler<SelectionKey> readHandler = new PooleadReadHandler(pendingData, executorService, selectorAction);
+        Handler<SelectionKey> readHandler = new PooledReadHandler(pendingData, executorService, selectorAction);
         Handler<SelectionKey> writeHandler = new WriteHandler(pendingData);
 
         ServerSocketChannel ss = ServerSocketChannel.open();
